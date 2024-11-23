@@ -34,7 +34,10 @@
                 <img data-src="${country.flags.svg}" alt="${country.translations.spa.common}" class="w-full h-full lazy-flag">
                 <div class="country-name hidden text-lg font-bold mt-2">${country.translations.spa.common}</div>
               </div>
-              <input type="text" class="flag-input w-full px-3 py-2 border rounded focus:outline-none text-center text-black font-bold" data-country="${countryName}">
+              <div class="flex gap-2">
+                <input type="text" class="flag-input w-full px-3 py-2 border rounded focus:outline-none text-center text-black font-bold" data-country="${countryName}">
+                <button class="submit-guess bg-green-600 text-white px-2 py-1 rounded font-semibold">¿Acertaste?</button>
+              </div>
             </div>
           `;
           container.append(flagHTML);
@@ -49,11 +52,16 @@
         $('.flag-input').on('keydown', function (e) {
           if (e.key === 'Enter') handleGuess($(this));
         });
+        // Agregar evento para enviar respuesta con el botón
+        $('.submit-guess').on('click', function () {
+          const input = $(this).prev('.flag-input'); // Obtener el campo de texto anterior
+          handleGuess(input); // Llamar a la función para verificar la respuesta
+        });
 
         $('.flag-card').on('click', function () {
           const card = $(this);
           const countryName = card.data('name');
-          const input = card.next('.flag-input');
+          const input = card.closest('.flex').find('.flag-input'); // Cambié .next() por .closest().find()
           if (input.prop('disabled')) {
             const countryData = countries.find(c => c.translations.spa.common.toLowerCase() === countryName);
             showCountryModal(countryData);
