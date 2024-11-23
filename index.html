@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego: Adivina el País</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .flag-card {
+      transition: background-color 0.3s;
+    }
+    
+    .scroll-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: rgba(255, 255, 255, 0.2); /* Fondo translúcido */
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+      backdrop-filter: blur(10px); /* Efecto glass */
+      z-index: 1000;
+    }
+
+    /* Efecto de hover: mover la flecha y agrandar el botón */
+    .scroll-to-top:hover {
+      transform: scale(1.05);
+      backdrop-filter: blur(15px); /* Aumentar el blur en hover */
+    }
+
+    .scroll-to-top:active {
+      transform: scale(1) translateY(0);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body class="bg-gradient-to-r from-gray-900 via-black to-gray-800 text-gray-100 scroll-smooth">
+  <div class="container mx-auto mt-10 p-4 text-center">
+    <h1 class="text-3xl font-bold mb-6">Juego: Adivina el País</h1>
+    <p class="score fixed top-2 left-2 bg-white/20 backdrop-blur-lg p-2 rounded-lg z-50 text-lg font-semibold inline-block">
+      Aciertos: <span id="correct">0</span> / <span id="total">0</span>
+    </p>    
+    <div id="flags-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </div>
+
+  <!-- Modal -->
+  <div id="countryModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white rounded-lg p-6 w-96 text-black">
+      <h5 class="text-2xl font-bold mb-4">Información del País</h5>
+      <p><strong>Nombre:</strong> <span id="modal-country-name"></span></p>
+      <p><strong>Capital:</strong> <span id="modal-country-capital"></span></p>
+      <p><strong>Población:</strong> <span id="modal-country-population"></span></p>
+      <p><strong>Área:</strong> <span id="modal-country-area"></span> km²</p>
+      <div id="modal-country-maps" class="mt-4"></div>
+      <button id="close-modal" class="mt-4 bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded">Cerrar</button>
+    </div>
+  </div>
+  <button class="scroll-to-top font-bold" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+    ↑
+  </button>
+</body>
+</html>
